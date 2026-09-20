@@ -88,6 +88,7 @@ test_detect_gpu_nvidia() {
   trap 'rm -rf "$stub_dir"' RETURN
   printf '#!/bin/sh\necho "01:00.0 VGA compatible controller: NVIDIA Corporation TU117"\n' > "$stub_dir/lspci"
   chmod +x "$stub_dir/lspci"
+  ln -s "$(command -v grep)" "$stub_dir/grep"
   assert_eq "nvidia" "$(PATH="$stub_dir" detect_gpu)" "detect_gpu finds NVIDIA in lspci -> nvidia"
 }
 
@@ -97,6 +98,7 @@ test_detect_gpu_other() {
   trap 'rm -rf "$stub_dir"' RETURN
   printf '#!/bin/sh\necho "01:00.0 VGA compatible controller: Advanced Micro Devices"\n' > "$stub_dir/lspci"
   chmod +x "$stub_dir/lspci"
+  ln -s "$(command -v grep)" "$stub_dir/grep"
   assert_eq "other" "$(PATH="$stub_dir" detect_gpu)" "detect_gpu finds no NVIDIA in lspci -> other"
 }
 

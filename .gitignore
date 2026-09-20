@@ -1,2 +1,8 @@
 # CLAUDE SESSION
 .claude
+
+# CLAUDE DOCS
+/docs
+
+# TESTING SCRPTS
+/tests

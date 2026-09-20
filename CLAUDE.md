@@ -1,4 +1,4 @@
-# Project: DarkDE — Hyprland Desktop Environment Framework
+# Project: NightDE — Hyprland Desktop Environment Framework
 
 ## Overview
 A portable, themeable dotfiles/config framework for Hyprland on Arch Linux (inspired by HyDE).
