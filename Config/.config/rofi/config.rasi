@@ -1,0 +1,9 @@
+configuration {
+    kb-row-up:     "Up";
+    kb-row-down:   "Down";
+    kb-cancel:     "Escape";
+    modi:          "drun";
+    show-icons:    true;
+}
+
+@theme "~/.config/rofi/themes/theme.rasi"

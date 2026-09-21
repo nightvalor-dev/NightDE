@@ -1,0 +1,51 @@
+/* ~/.config/rofi/config.rasi (or a separate theme.rasi included via @theme) */
+
+* {
+    bg:      #1a1a1aE6;   /* dark, semi-transparent for blur to show through */
+    bg-alt:  #2a2a2aCC;
+    fg:      #E0E0E0;
+    accent:  #4a4a4aF2;
+    border:  #ffffff1A;
+
+    background-color: transparent;
+    text-color:        @fg;
+}
+
+window {
+    width:              600px;
+    height:             500px;
+    background-color:   @bg;
+    border:             1px;
+    border-color:       @border;
+    border-radius:      12px;
+    padding:            12px;
+}
+
+inputbar {
+    background-color:   @bg-alt;
+    border-radius:       8px;
+    padding:            10px 12px;
+    children:            [ entry ];
+}
+
+entry {
+    placeholder:        "Search…";
+    placeholder-color:  #888888;
+}
+
+listview {
+    background-color:   transparent;
+    margin:              10px 0 0;
+    lines:               8;
+    spacing:             4px;
+}
+
+element {
+    padding:        8px 10px;
+    border-radius:  8px;
+}
+
+element selected {
+    background-color:  @accent;
+    text-color:         @fg;
+}
