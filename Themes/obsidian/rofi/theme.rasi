@@ -1,10 +1,10 @@
-/* ~/.config/rofi/config.rasi (or a separate theme.rasi included via @theme) */
+/* Themes/obsidian/rofi/theme.rasi — included via ~/.config/rofi/themes/theme.rasi */
 
 * {
-    bg:      #1a1a1aE6;   /* dark, semi-transparent for blur to show through */
-    bg-alt:  #2a2a2aCC;
-    fg:      #E0E0E0;
-    accent:  #4a4a4aF2;
+    bg:      #121214E6;   /* dark, semi-transparent for blur to show through */
+    bg-alt:  #1c1c20CC;
+    fg:      #E4E4E7;
+    accent:  #6E8CAEF2;
     border:  #ffffff1A;
 
     background-color: transparent;
@@ -30,7 +30,7 @@ inputbar {
 
 entry {
     placeholder:        "Search…";
-    placeholder-color:  #888888;
+    placeholder-color:  #8B8B93;
 }
 
 listview {
