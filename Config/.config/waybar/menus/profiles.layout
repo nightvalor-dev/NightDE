@@ -1,0 +1,18 @@
+{
+    "label": "performance",
+    "action": "busctl set-property net.hadess.PowerProfiles /net/hadess/PowerProfiles net.hadess.PowerProfiles ActiveProfile s performance",
+    "text": "Performance",
+    "keybind": "p"
+}
+{
+    "label": "balanced",
+    "action": "busctl set-property net.hadess.PowerProfiles /net/hadess/PowerProfiles net.hadess.PowerProfiles ActiveProfile s balanced",
+    "text": "Balanced",
+    "keybind": "b"
+}
+{
+    "label": "power-saver",
+    "action": "busctl set-property net.hadess.PowerProfiles /net/hadess/PowerProfiles net.hadess.PowerProfiles ActiveProfile s power-saver",
+    "text": "Power Saver",
+    "keybind": "s"
+}

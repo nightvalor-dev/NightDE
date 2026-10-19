@@ -29,6 +29,12 @@ hl.window_rule({
     no_focus = true,
 })
 
+hl.layer_rule({
+    name  = "blur-wlogout",
+    match = { namespace = "logout_dialog" },
+    blur  = true,
+})
+
 hl.window_rule({
     name  = "float-utilities",
     match = { class = "^(org.pulseaudio.pavucontrol|nm-connection-editor|blueman-manager)$" },
@@ -56,7 +62,7 @@ hl.window_rule({
 -- Settings-type apps open floating, centered, at a sensible size
 hl.window_rule({
     name   = "float-settings-apps",
-    match  = { class = "^(org.pulseaudio.pavucontrol|pavucontrol|nwg-look|qt6ct|code|brave)$" },
+    match  = { class = "^(org.pulseaudio.pavucontrol|pavucontrol|nwg-look|qt6ct|code|brave|nmtui)$" },
     float  = true,
     center = true,
     size   = "900 600",
@@ -70,3 +76,6 @@ hl.window_rule({
     center = true,
     size   = "1100 700",
 })
+
+hl.layer_rule({ name = "blur-waybar", match = { namespace = "^waybar$" }, blur = true })
+hl.layer_rule({ name = "blur-swaync", match = { namespace = "^swaync-" }, blur = true, ignore_alpha = 0.1 })

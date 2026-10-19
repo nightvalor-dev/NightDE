@@ -1,40 +1,150 @@
-@import "colors.css";
+/* =========================================================
+   Waybar — frosted strip, ring gauges, numbered workspaces
+   White text, Kanagawa-colored icons (colors live in config.jsonc)
+   Blur comes from a Hyprland layer rule on namespace "waybar".
+   ========================================================= */
 
 * {
-    font-family: "CaskaydiaCove Nerd Font Mono";
-    font-size: 13px;
+    font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", monospace;
+    font-size: 14px;
+    font-weight: bold;
     border: none;
     border-radius: 0;
     min-height: 0;
 }
 
 window#waybar {
-    background-color: @background;
-    color: @foreground;
-    border-bottom: 1px solid @border;
+    background: rgba(0, 0, 0, 0.45);
+    color: #ffffff;
 }
 
-#workspaces button {
-    padding: 0 8px;
-    color: @foregroundMuted;
+/* ---- Tooltip (only the gauges use it) ---- */
+tooltip {
+    background: rgba(18, 18, 18, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
 }
+tooltip > * { background: transparent; }
+tooltip label { color: #ffffff; }
 
-#workspaces button.active {
-    color: @accent;
-}
-
-#clock,
+/* ---- Every module ---- */
+#custom-logo,
+#custom-sysinfo,
+#mpris,
+#workspaces,
+#custom-screenshot,
+#tray,
 #pulseaudio,
 #network,
 #battery,
-#tray {
-    padding: 0 10px;
-    margin: 4px 2px;
-    background-color: @backgroundAlt;
-    color: @foreground;
-    border-radius: 6px;
+#clock,
+#custom-notification,
+#custom-power {
+    background: transparent;
+    color: #ffffff;
+    padding: 0 6px;
+    margin: 4px 0;
+    border-radius: 10px;
 }
 
-#battery.critical {
-    color: @urgent;
+/* Hover = soft glass pill */
+#custom-logo:hover,
+#custom-screenshot:hover,
+#mpris:hover,
+#pulseaudio:hover,
+#network:hover,
+#battery:hover,
+#clock:hover,
+#custom-notification:hover,
+#custom-power:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* ---- Left: Fedora logo ---- */
+#custom-logo {
+    font-size: 18px;
+    padding: 0 12px 0 14px;
+}
+
+/* ---- Center: gauges, media, workspaces, screenshot ---- */
+#custom-sysinfo {
+    font-size: 13px;
+}
+
+#mpris {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: normal;
+}
+
+#workspaces {
+    padding: 0 6px;
+    margin: 4px 6px;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+#workspaces button {
+    color: #ffffff;
+    background: transparent;
+    padding: 0 6px;
+    margin: 3px 1px;
+    min-width: 18px;
+    border-radius: 999px;
+    box-shadow: none;
+    font-size: 13px;
+}
+
+/* Workspaces with no windows are dimmed */
+#workspaces button.empty {
+    color: #727169;
+}
+
+#workspaces button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: none;
+}
+
+/* Active workspace: solid white pill */
+#workspaces button.active {
+    background: rgba(255, 255, 255, 0.92);
+    color: #121212;
+}
+
+#workspaces button.urgent {
+    background: #E82424;
+    color: #ffffff;
+}
+
+#custom-screenshot {
+    padding: 0 8px;
+    font-size: 15px;
+}
+
+/* ---- Right ---- */
+#custom-power {
+    padding: 0 16px 0 10px;
+}
+
+#battery.warning:not(.charging):not(.plugged)  { color: #E6C384; }
+#battery.critical:not(.charging):not(.plugged) { color: #E82424; }
+
+#tray > .needs-attention {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ---- Dropdown menus (tray app menus) ---- */
+window.popup { background: transparent; }
+
+menu {
+    background: rgba(18, 18, 18, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 6px;
+}
+menuitem {
+    color: #ffffff;
+    padding: 6px 16px;
+    border-radius: 6px;
+}
+menuitem:hover {
+    background: rgba(255, 255, 255, 0.15);
 }

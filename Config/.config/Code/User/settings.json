@@ -1,0 +1,30 @@
+{
+    "workbench.colorTheme": "Kanagawa Black",
+    "workbench.colorCustomizations": {
+        "editor.background": "#121212",
+        "editorGutter.background": "#121212",
+        "sideBar.background": "#121212",
+        "sideBarSectionHeader.background": "#121212",
+        "activityBar.background": "#121212",
+        "panel.background": "#121212",
+        "terminal.background": "#121212",
+        "titleBar.activeBackground": "#121212",
+        "titleBar.inactiveBackground": "#121212",
+        "statusBar.background": "#121212",
+        "breadcrumb.background": "#121212",
+
+        "editorGroupHeader.tabsBackground": "#0D0D0D",
+        "tab.inactiveBackground": "#0D0D0D",
+        "tab.activeBackground": "#121212",
+
+        "editor.selectionBackground": "#76946A66",
+        "editorGroup.emptyBackground": "#121212",
+        "editorPane.background": "#121212",
+    },
+    "editor.fontFamily": "JetBrainsMono Nerd Font Mono",
+    "editor.fontSize": 16,
+    "editor.fontWeight": 500,
+    "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font Mono",
+    "terminal.integrated.fontSize": 14,
+    "terminal.integrated.fontWeight": 500,
+}

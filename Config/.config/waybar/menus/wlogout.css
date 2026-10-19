@@ -1,0 +1,54 @@
+/* Frosted-glass strip. The blur itself comes from a Hyprland layer rule;
+   everything here is translucent white/black on top of that blur.
+   Icon paths are relative to this file (the icons folder). */
+
+* {
+    background-image: none;
+    box-shadow: none;
+    font-family: "JetBrainsMono Nerd Font", sans-serif;
+}
+
+/* Whole screen: blurred desktop with a light dark tint */
+window,
+window.background {
+    background-color: rgba(0, 0, 0, 0.20);
+}
+
+/* Resting buttons: frosted glass, inset vertically so the hovered one can grow */
+button {
+    color: #ffffff;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.08);
+    background-repeat: no-repeat;
+    background-position: center 42%;
+    background-size: 22%;
+    border: none;
+    border-radius: 0;
+    margin: 36px 0;
+    outline-style: none;
+    transition: all 0.25s ease;
+}
+
+/* Rounded ends of the strip */
+#lock,   #performance { border-radius: 28px 0 0 28px; }
+#reboot, #power-saver { border-radius: 0 28px 28px 0; }
+
+/* Hovered / keyboard-focused: taller, fully rounded, brighter glass, bigger icon */
+button:hover,
+button:focus {
+    background-color: rgba(255, 255, 255, 0.22);
+    background-size: 30%;
+    border-radius: 28px;
+    margin: 0;
+}
+
+/* Icons */
+#lock        { background-image: url("icons/lock.svg"); }
+#logout      { background-image: url("icons/logout.svg"); }
+#suspend     { background-image: url("icons/suspend.svg"); }
+#shutdown    { background-image: url("icons/shutdown.svg"); }
+#hibernate   { background-image: url("icons/hibernate.svg"); }
+#reboot      { background-image: url("icons/reboot.svg"); }
+#performance { background-image: url("icons/performance.svg"); }
+#balanced    { background-image: url("icons/balanced.svg"); }
+#power-saver { background-image: url("icons/power-saver.svg"); }

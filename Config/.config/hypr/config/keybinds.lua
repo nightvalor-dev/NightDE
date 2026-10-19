@@ -17,6 +17,8 @@ local pgadmin     = "flatpak run org.pgadmin.pgadmin4"
 
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
+hl.bind(mainMod .. " + G", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock -c ~/.config/hypr/hyprlock/hyprlock.conf"))
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + K", hl.dsp.exec_cmd(terminal))
@@ -33,12 +35,45 @@ hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(pgadmin))
 -- hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 -- hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 
+-- maximize and maximize windows 
+hl.bind(mainMod .. " + up", function()
+    local win = hl.get_active_window()
+    if not win then return end
+
+    -- leave real fullscreen/maximized if the app was in it
+    if win.fullscreen ~= 0 then
+        hl.dispatch(hl.dsp.window.fullscreen({ action = "unset" }))
+    end
+
+    -- tiled + alone on the workspace = fills the screen with your gaps
+    if win.floating then
+        hl.dispatch(hl.dsp.window.float({ action = "unset" }))
+    end
+end)
+
+hl.bind(mainMod .. " + down", function()
+    local win = hl.get_active_window()
+    if not win then return end
+
+    -- leave maximized/fullscreen first
+    if win.fullscreen ~= 0 then
+        hl.dispatch(hl.dsp.window.fullscreen({ mode = "maximized", action = "unset" }))
+    end
+
+    -- make it float
+    if not win.floating then
+        hl.dispatch(hl.dsp.window.float({ action = "set" }))
+    end
+
+    -- set the size and center it
+    hl.dispatch(hl.dsp.window.resize({ x = 900, y = 600, exact = true }))
+    hl.dispatch(hl.dsp.window.center({}))
+end)
+
 
 -- Move focus with mainMod + arrow keys
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + up",    hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + down",  hl.dsp.focus({ direction = "down" }))
 
 
 -- Switch workspaces with mainMod + [0-9]
@@ -68,8 +103,8 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 -- Laptop multimedia keys for volume and LCD brightness
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
-hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, repeating = true })
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true })
+hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true })
 hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true })
 

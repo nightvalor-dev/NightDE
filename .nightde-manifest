@@ -1,0 +1,14 @@
+.config/hypr
+.config/waybar
+.config/swaync
+.config/kitty
+.config/qt6ct
+.config/gtk-3.0
+.config/gtk-4.0
+.config/starship.toml
+.config/Code/User/settings.json
+.local/share/nwg-look
+.dircolors
+.themes
+.local/share/icons
+.local/share/fonts

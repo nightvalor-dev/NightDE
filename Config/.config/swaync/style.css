@@ -1,0 +1,179 @@
+/* swaync — frosted sidebar matching Waybar / wlogout
+   Blur comes from Hyprland layer rules on the swaync namespaces. */
+
+* {
+    font-family: "JetBrainsMono Nerd Font", sans-serif;
+    font-size: 14px;
+}
+
+/* ---------- Sidebar panel ---------- */
+.control-center {
+    background: rgba(18, 18, 18, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 18px;
+    padding: 12px;
+    color: #ffffff;
+}
+
+.control-center-list,
+.control-center-list-placeholder {
+    background: transparent;
+}
+
+/* ---------- Quick-toggle grid ---------- */
+.widget-buttons-grid {
+    padding: 4px 0 8px 0;
+}
+
+.widget-buttons-grid button {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border: none;
+    border-radius: 14px;
+    min-height: 44px;
+    min-width: 52px;
+    margin: 4px;
+    font-size: 18px;
+    box-shadow: none;
+}
+
+.widget-buttons-grid button:hover {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+/* Toggles that are ON (Wi-Fi / Bluetooth) = solid white */
+.widget-buttons-grid button:checked,
+.widget-buttons-grid button.toggle:checked {
+    background: rgba(255, 255, 255, 0.92);
+    color: #121212;
+}
+
+/* ---------- Sliders ---------- */
+.widget-volume,
+.widget-backlight {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 8px 14px;
+    margin: 4px 0;
+    color: #ffffff;
+}
+
+.widget-volume label,
+.widget-backlight label {
+    font-size: 18px;
+    margin-right: 8px;
+}
+
+scale trough {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    min-height: 6px;
+}
+
+scale highlight,
+scale trough highlight {
+    background: #ffffff;
+    border-radius: 8px;
+}
+
+scale slider {
+    background: #ffffff;
+    min-width: 14px;
+    min-height: 14px;
+    border-radius: 999px;
+    box-shadow: none;
+}
+
+/* ---------- Media ---------- */
+.widget-mpris {
+    margin: 4px 0;
+}
+
+.widget-mpris-player {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 10px;
+    color: #ffffff;
+}
+
+.widget-mpris-title  { font-weight: bold; }
+.widget-mpris-subtitle { color: rgba(255, 255, 255, 0.7); }
+
+/* ---------- Notifications header + DND ---------- */
+.widget-title {
+    margin: 10px 4px 4px 4px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.widget-title > button,
+.widget-title button {
+    background: rgba(255, 255, 255, 0.10);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 4px 12px;
+    box-shadow: none;
+}
+
+.widget-title button:hover {
+    background: rgba(255, 255, 255, 0.20);
+}
+
+.widget-dnd {
+    margin: 4px;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.widget-dnd switch {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    border-radius: 999px;
+}
+
+.widget-dnd switch:checked {
+    background: rgba(255, 255, 255, 0.92);
+}
+
+.widget-dnd switch slider {
+    background: #121212;
+    border-radius: 999px;
+}
+
+/* ---------- Notification cards ---------- */
+.notification-row,
+.notification-group {
+    background: transparent;
+    outline: none;
+}
+
+.notification,
+.notification-content {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border-radius: 14px;
+    border: none;
+    box-shadow: none;
+}
+
+.notification .summary { font-weight: bold; }
+.notification .body    { color: rgba(255, 255, 255, 0.8); }
+.notification .time    { color: rgba(255, 255, 255, 0.5); }
+
+.notification.critical {
+    border: 1px solid rgba(232, 36, 36, 0.7);
+}
+
+.close-button {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    border-radius: 999px;
+    border: none;
+}
+
+/* Pop-up notifications (outside the sidebar) */
+.floating-notifications .notification {
+    background: rgba(18, 18, 18, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
