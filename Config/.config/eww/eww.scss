@@ -1,0 +1,161 @@
+// NightDE sidebar — Kanagawa (neutral blacks + wave-red accent)
+$bg:      rgba(18, 18, 18, 0.20);   // Kanagawa black, 20% opacity
+$text:    #DCD7BA;                  // fujiWhite
+$muted:   #727169;                  // fujiGray
+$soft:    #C8C093;                  // oldWhite
+$accent:  #E46876;                  // waveRed
+$red:     #C34043;                  // autumnRed
+$surface: rgba(255, 255, 255, 0.05);
+$hover:   rgba(255, 255, 255, 0.10);
+
+* {
+  all: unset;
+  font-family: "Rubik", "JetBrainsMono Nerd Font", sans-serif;
+  font-size: 14px;
+  color: $text;
+}
+
+.sidebar {
+  background-color: $bg;
+  border-radius: 24px;
+  padding: 18px;
+}
+
+// ---------- Uptime ----------
+.uptime {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+// ---------- Icon buttons ----------
+.qbtn {
+  padding: 0 2px;          // no extra height, so the row stays slim
+  color: $text;
+}
+.qbtn:hover  { color: #FFFFFF; }
+.qbtn.on     { color: $accent; }
+
+// Icon size goes on the label inside the button (the * rule would override it otherwise)
+.qbtn label         { font-size: 18px; color: inherit; }
+.qbtn:hover label   { color: #FFFFFF; }
+.qbtn.on label      { color: $accent; }
+
+// ---------- Sliders ----------
+.slider-icon {
+  font-size: 18px;
+  min-width: 28px;
+}
+
+.slider trough {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  min-height: 10px;
+  min-width: 220px;
+}
+.slider highlight {
+  background-color: $accent;
+  border-radius: 999px;
+}
+.slider slider {
+  background-color: $text;
+  border-radius: 999px;
+  min-width: 16px;
+  min-height: 16px;
+  margin: -3px 0;
+}
+
+// ---------- Notifications ----------
+.section {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.clear {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background-color: $surface;
+}
+.clear:hover { background-color: $red; }
+
+.notif {
+  background-color: $surface;
+  border-radius: 14px;
+  padding: 10px 12px;
+}
+.app     { color: $muted; font-size: 12px; }
+.summary { font-weight: bold; }
+.body    { color: $soft; font-size: 13px; }
+
+.close        { color: $muted; font-size: 14px; padding: 0 2px; }
+.close:hover  { color: $red; }
+
+.empty {
+  color: $muted;
+  margin-top: 24px;
+}
+
+scrollbar {
+  background-color: transparent;
+  margin-left: 4px;
+}
+scrollbar slider {
+  background-color: rgba(220, 215, 186, 0.30);
+  border-radius: 999px;
+  min-width: 6px;
+  min-height: 40px;
+}
+scrollbar slider:hover { background-color: rgba(220, 215, 186, 0.55); }
+
+// ---------- Click-away layer (fully invisible) ----------
+window { background-color: transparent; }
+.closer { background-color: transparent; }
+
+// ---------- Calendar ----------
+.cal { margin-top: 4px; }
+
+.cal-title {
+  font-size: 15px;
+  font-weight: bold;
+  padding: 2px 4px;
+}
+
+.cal-arrow {
+  font-size: 18px;
+  color: $muted;
+  padding: 0 6px;
+  border-radius: 999px;
+}
+.cal-arrow:hover { color: $text; background-color: $hover; }
+
+.cal-dayname {
+  font-size: 12px;
+  font-weight: bold;
+  color: $text;
+  padding: 4px 0;
+}
+
+// Every day is a fixed 32x32 square, so a 999px radius makes a perfect circle
+.cal-day {
+  min-width: 32px;
+  min-height: 32px;
+  font-size: 13px;
+  border-radius: 999px;
+}
+
+.cal-day.other { color: #4A4A4A; }
+
+// Today: red filled circle, number centred
+.cal-day.today {
+  background-color: $accent;
+  color: #121212;
+  font-weight: bold;
+}
+
+@import "clipboard";
+
+// A little breathing room above the "Notifications" heading
+.notif-header { margin-top: 3px; }
+
+// A little breathing room above the "Notifications" heading
+.notif-header { margin-top: 5px; }

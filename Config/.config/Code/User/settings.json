@@ -17,7 +17,13 @@
         "tab.inactiveBackground": "#0D0D0D",
         "tab.activeBackground": "#121212",
 
-        "editor.selectionBackground": "#76946A66",
+        "editor.selectionBackground": "#7A3B3F",
+        "editor.inactiveSelectionBackground": "#7A3B3F80",
+        "editor.selectionHighlightBackground": "#7A3B3F55",
+        "terminal.selectionBackground": "#7A3B3F",
+        "list.activeSelectionBackground": "#7A3B3F",
+        "list.inactiveSelectionBackground": "#7A3B3F80",
+
         "editorGroup.emptyBackground": "#121212",
         "editorPane.background": "#121212",
     },

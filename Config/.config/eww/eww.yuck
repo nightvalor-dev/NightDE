@@ -1,0 +1,124 @@
+;; NightDE sidebar — eww
+;; Open/close:  ~/.config/eww/scripts/toggle.sh   (Waybar's controls box runs this)
+;; Clicking anywhere outside the sidebar closes it (invisible full-screen "closer" window).
+
+;; ---------------- Data ----------------
+(defpoll uptime      :interval "30s" "$HOME/.config/eww/scripts/uptime.sh")
+(defpoll wifi_on     :interval "3s"  "$HOME/.config/eww/scripts/wifi.sh status")
+(defpoll bt_on       :interval "3s"  "$HOME/.config/eww/scripts/bluetooth.sh status")
+(defpoll volume      :interval "1s"  "$HOME/.config/eww/scripts/volume.sh get")
+(defpoll brightness  :interval "2s"  "$HOME/.config/eww/scripts/brightness.sh get")
+(defpoll notifs      :interval "2s"  :initial "[]" "$HOME/.config/eww/scripts/notifications.sh")
+(defpoll cal         :interval "60s" :initial '{"title": "", "weeks": []}' "$HOME/.config/eww/scripts/calendar.sh")
+
+;; ---------------- Windows ----------------
+;; Invisible layer under the sidebar: a click anywhere on it closes everything
+(defwindow sidebar-closer
+  :monitor 0
+  :geometry (geometry :x "0px" :y "0px" :width "100%" :height "100%" :anchor "top left")
+  :stacking "overlay"
+  :exclusive false
+  :focusable false
+  :namespace "eww-closer"
+  (eventbox :class "closer" :onclick "$HOME/.config/eww/scripts/toggle.sh close"
+    (box :hexpand true :vexpand true)))
+
+(defwindow sidebar
+  :monitor 0
+  :geometry (geometry :x "6px" :y "6px" :width "360px" :height "1030px" :anchor "top right")
+  :stacking "overlay"
+  :exclusive false
+  :focusable false
+  :namespace "eww-sidebar"
+  (sidebar))
+
+;; ---------------- Layout ----------------
+(defwidget sidebar []
+  (box :class "sidebar" :orientation "v" :space-evenly false :spacing 16
+    (header)
+    (quick-buttons)
+    (sliders)
+    (notification-box)
+    (month-calendar)))
+
+;; Uptime
+(defwidget header []
+  (box :class "header" :space-evenly false
+    (label :class "uptime" :halign "start" :hexpand true
+           :text "󰅐  Uptime: ${uptime}")))
+
+;; Icon-only buttons, centred and close together; Wi-Fi / Bluetooth glow red when on
+(defwidget quick-buttons []
+  (box :class "quick" :orientation "h" :space-evenly false :halign "center" :spacing 22
+    (button :class {wifi_on == "true" ? "qbtn on" : "qbtn"}
+            :tooltip "Wi-Fi (right-click: on/off)"
+            :onclick "$HOME/.config/eww/scripts/toggle.sh close; kitty --class nmtui -e $HOME/go/bin/wifitui &"
+            :onrightclick "$HOME/.config/eww/scripts/wifi.sh toggle &"
+      "󰖩")
+    (button :class {bt_on == "true" ? "qbtn on" : "qbtn"}
+            :tooltip "Bluetooth (right-click: on/off)"
+            :onclick "$HOME/.config/eww/scripts/toggle.sh close; kitty --class bluetui -e $HOME/.cargo/bin/bluetui &"
+            :onrightclick "$HOME/.config/eww/scripts/bluetooth.sh toggle &"
+      "󰂯")
+    (button :class "qbtn" :tooltip "Appearance"
+            :onclick "$HOME/.config/eww/scripts/toggle.sh close; nwg-look &"
+      "󰒓")
+    (button :class "qbtn" :tooltip "Lock"
+            :onclick "$HOME/.config/eww/scripts/toggle.sh close; hyprlock -c $HOME/.config/hypr/hyprlock/hyprlock.conf &"
+      "󰌾")
+    (button :class "qbtn" :tooltip "Power"
+            :onclick "$HOME/.config/eww/scripts/toggle.sh close; $HOME/.config/waybar/menus/power.sh &"
+      "󰐥")))
+
+;; Volume + brightness
+(defwidget sliders []
+  (box :class "sliders" :orientation "v" :space-evenly false :spacing 6
+    (box :class "slider-row" :space-evenly false
+      (label :class "slider-icon" :text "󰕾")
+      (scale :class "slider" :hexpand true :min 0 :max 101
+             :value {volume}
+             :onchange "$HOME/.config/eww/scripts/volume.sh set {}"))
+    (box :class "slider-row" :space-evenly false
+      (label :class "slider-icon" :text "󰃟")
+      (scale :class "slider" :hexpand true :min 1 :max 101
+             :value {brightness}
+             :onchange "$HOME/.config/eww/scripts/brightness.sh set {}"))))
+
+;; Notifications in a scrollable box
+(defwidget notification-box []
+  (box :class "notif-box" :orientation "v" :space-evenly false :vexpand true :spacing 8
+    (box :class "notif-header" :space-evenly false
+      (label :class "section" :halign "start" :hexpand true :text "Notifications")
+      (button :class "clear" :onclick "dunstctl history-clear" "Clear all"))
+    (scroll :class "notif-scroll" :vscroll true :hscroll false :vexpand true
+      (box :orientation "v" :space-evenly false :spacing 8
+        (label :class "empty" :visible {arraylength(notifs) == 0} :text "No notifications")
+        (for n in notifs
+          (box :class "notif" :orientation "v" :space-evenly false :spacing 2
+            (box :space-evenly false
+              (label :class "app" :halign "start" :hexpand true :limit-width 30 :text {n.app})
+              (button :class "close" :onclick "dunstctl history-rm ${n.id}" "󰅖"))
+            (label :class "summary" :halign "start" :xalign 0 :wrap true :text {n.summary})
+            (label :class "body" :halign "start" :xalign 0 :wrap true :visible {n.body != ""} :text {n.body})))))))
+
+;; Calendar built from fixed-size cells: today is a true circle with the number centred.
+;; Click the month title to jump back to the current month.
+(defwidget month-calendar []
+  (box :class "cal" :orientation "v" :space-evenly false :spacing 4
+    (box :class "cal-head" :space-evenly false
+      (button :class "cal-title" :halign "start" :hexpand true
+              :onclick "$HOME/.config/eww/scripts/calendar.sh today"
+        {cal.title})
+      (button :class "cal-arrow" :onclick "$HOME/.config/eww/scripts/calendar.sh prev" "󰅁")
+      (button :class "cal-arrow" :onclick "$HOME/.config/eww/scripts/calendar.sh next" "󰅂"))
+    (box :class "cal-row" :space-evenly true
+      (for name in '["Mo","Tu","We","Th","Fr","Sa","Su"]'
+        (label :class "cal-dayname" :text name)))
+    (for week in {cal.weeks}
+      (box :class "cal-row" :space-evenly true
+        (for day in week
+          (box :class "cal-cell" :halign "center" :valign "center"
+            (label :class "cal-day ${day.c}" :halign "center" :valign "center"
+                   :xalign 0.5 :yalign 0.5 :text {day.d})))))))
+
+(include "./clipboard.yuck")

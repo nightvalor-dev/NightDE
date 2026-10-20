@@ -5,29 +5,37 @@
    ========================================================= */
 
 * {
-    font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", monospace;
-    font-size: 14px;
-    font-weight: bold;
-    border: none;
-    border-radius: 0;
-    min-height: 0;
+  font-family:
+    "Rubik", "JetBrainsMono Nerd Font", "Symbols Nerd Font", sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
 }
 
 window#waybar {
-    background: rgba(0, 0, 0, 0.45);
-    color: #ffffff;
+  background: rgba(0, 0, 0, 0.45);
+  color: #ffffff;
 }
 
-/* ---- Tooltip (only the gauges use it) ---- */
+/* ---- Tooltip (only the gauges use it) — Kanagawa ---- */
 tooltip {
-    background: rgba(18, 18, 18, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
+  /* see-through Kanagawa black + autumn-red border (blur shows through) */
+  background: rgba(18, 18, 18, 0.75);
+  border: 2px solid rgba(195, 64, 67, 0.7);
+  border-radius: 12px;
 }
-tooltip > * { background: transparent; }
-tooltip label { color: #ffffff; }
+tooltip > * {
+  background: transparent;
+}
+tooltip label {
+  color: #dcd7ba; /* fujiWhite */
+  font-family:
+    "JetBrainsMono Nerd Font", monospace; /* keeps gauge columns aligned */
+}
 
-/* ---- Every module ---- */
+/* ---- Every module (all the same size: 14px bold from the * rule) ---- */
 #custom-logo,
 #custom-sysinfo,
 #mpris,
@@ -38,113 +46,140 @@ tooltip label { color: #ffffff; }
 #network,
 #battery,
 #clock,
-#custom-notification,
 #custom-power {
-    background: transparent;
-    color: #ffffff;
-    padding: 0 6px;
-    margin: 4px 0;
-    border-radius: 10px;
+  background: transparent;
+  color: #ffffff;
+  padding: 0 10px;
+  margin: 4px 0;
+  border-radius: 10px;
 }
 
-/* Hover = soft glass pill */
+/* Hover = soft glass pill (the grouped controls light up together, below) */
 #custom-logo:hover,
 #custom-screenshot:hover,
 #mpris:hover,
-#pulseaudio:hover,
-#network:hover,
-#battery:hover,
-#clock:hover,
-#custom-notification:hover,
-#custom-power:hover {
-    background: rgba(255, 255, 255, 0.12);
+#clock:hover {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 /* ---- Left: Fedora logo ---- */
 #custom-logo {
-    font-size: 18px;
-    padding: 0 12px 0 14px;
+  font-size: 18px;
+  padding: 0 12px 0 14px;
 }
 
 /* ---- Center: gauges, media, workspaces, screenshot ---- */
-#custom-sysinfo {
-    font-size: 13px;
-}
-
 #mpris {
-    color: rgba(255, 255, 255, 0.85);
-    font-weight: normal;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 #workspaces {
-    padding: 0 6px;
-    margin: 4px 6px;
-    background: rgba(255, 255, 255, 0.06);
+  padding: 0 6px;
+  margin: 4px 6px;
+  background: rgba(255, 255, 255, 0.06);
 }
 
 #workspaces button {
-    color: #ffffff;
-    background: transparent;
-    padding: 0 6px;
-    margin: 3px 1px;
-    min-width: 18px;
-    border-radius: 999px;
-    box-shadow: none;
-    font-size: 13px;
+  color: #ffffff;
+  background: transparent;
+  padding: 0 6px;
+  margin: 3px 1px;
+  min-width: 18px;
+  border-radius: 999px;
+  box-shadow: none;
 }
 
 /* Workspaces with no windows are dimmed */
 #workspaces button.empty {
-    color: #727169;
+  color: #727169;
 }
 
 #workspaces button:hover {
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: none;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: none;
 }
 
 /* Active workspace: solid white pill */
 #workspaces button.active {
-    background: rgba(255, 255, 255, 0.92);
-    color: #121212;
+  background: rgba(255, 255, 255, 0.92);
+  color: #121212;
 }
 
 #workspaces button.urgent {
-    background: #E82424;
-    color: #ffffff;
+  background: #e82424;
+  color: #ffffff;
 }
 
 #custom-screenshot {
-    padding: 0 8px;
-    font-size: 15px;
+  padding: 0 8px;
 }
 
-/* ---- Right ---- */
-#custom-power {
-    padding: 0 16px 0 10px;
+/* ---- Right: volume + network + battery + power share one box ----
+   Clicking anywhere in it opens the sidebar; the whole box highlights on hover. */
+#controls {
+  border-radius: 10px;
+  margin: 4px 6px 4px 0;
+  padding: 0 4px;
 }
 
-#battery.warning:not(.charging):not(.plugged)  { color: #E6C384; }
-#battery.critical:not(.charging):not(.plugged) { color: #E82424; }
+#controls:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Modules inside the box: tighter spacing, no own margin/hover */
+#controls #pulseaudio,
+#controls #network,
+#controls #battery,
+#controls #custom-power {
+  margin: 0;
+  padding: 0 5px;
+  background: transparent;
+}
+
+/* A little extra room after the power icon so it isn't clipped */
+#controls #custom-power {
+  padding: 0 10px 0 5px;
+}
+
+#battery.warning:not(.charging):not(.plugged) {
+  color: #e6c384;
+}
+#battery.critical:not(.charging):not(.plugged) {
+  color: #e82424;
+}
 
 #tray > .needs-attention {
-    background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* ---- Dropdown menus (tray app menus) ---- */
-window.popup { background: transparent; }
+window.popup {
+  background: transparent;
+}
 
 menu {
-    background: rgba(18, 18, 18, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-    padding: 6px;
+  /* see-through Kanagawa black + autumn-red border (blur shows through) */
+  background: rgba(18, 18, 18, 0.75);
+  border: 2px solid rgba(195, 64, 67, 0.7);
+  border-radius: 10px;
+  padding: 6px;
 }
 menuitem {
-    color: #ffffff;
-    padding: 6px 16px;
-    border-radius: 6px;
+  color: #dcd7ba; /* fujiWhite */
+  padding: 6px 16px;
+  border-radius: 6px;
 }
 menuitem:hover {
-    background: rgba(255, 255, 255, 0.15);
+  background: #393836; /* dragonBlack5 */
+}
+
+/* ---- Clipboard history button ---- */
+#custom-clipboard {
+  font-size: 18px;
+  padding: 0 10px;
+  margin: 4px 0;
+  border-radius: 10px;
+}
+#custom-clipboard:hover {
+  background: rgba(255, 255, 255, 0.12);
 }

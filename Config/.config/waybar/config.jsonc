@@ -1,145 +1,139 @@
 // Waybar — frosted bar with ring gauges (Kanagawa icon colors)
 {
-    "layer": "top",
-    "position": "top",
-    "height": 38,
-    "spacing": 0,
-    "modules-left": [
-        "custom/logo",
-        "clock"
+  "layer": "top",
+  "position": "top",
+  "height": 38,
+  "spacing": 0,
+  "modules-left": [
+    "custom/logo",
+    "clock"
+  ],
+  "modules-center": [
+    "custom/sysinfo",
+    "mpris",
+    "hyprland/workspaces",
+    "custom/screenshot",
+    "custom/clipboard"
+  ],
+  "modules-right": [
+    "tray",
+    "group/controls"
+  ],
+  "custom/logo": {
+    "format": "<span color='#7E9CD8' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>\uf30a</span>",
+    "tooltip": false,
+    "on-click": "rofi -show drun"
+  },
+  "clock": {
+    "format": "{:%H:%M}",
+    "format-alt": "{:%a %d %b  %H:%M}",
+    "tooltip": false
+  },
+  "custom/sysinfo": {
+    "exec": "$HOME/.config/waybar/scripts/sysinfo.sh",
+    "return-type": "json",
+    "restart-interval": 5
+  },
+  "mpris": {
+    "format": "<span color='#957FB8' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>\udb81\udf5a </span>{dynamic}",
+    "format-paused": "<span color='#727169' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>\uf04c </span><i>{dynamic}</i>",
+    "dynamic-len": 28,
+    "dynamic-order": [
+      "title",
+      "artist"
     ],
-    "modules-center": [
-        "custom/sysinfo",
-        "mpris",
-        "hyprland/workspaces",
-        "custom/screenshot"
+    "on-click": "playerctl play-pause",
+    "on-scroll-up": "playerctl next",
+    "on-scroll-down": "playerctl previous",
+    "tooltip": false
+  },
+  "hyprland/workspaces": {
+    "format": "{name}",
+    "persistent-workspaces": {
+      "*": 10
+    },
+    "on-click": "activate",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1"
+  },
+  "custom/screenshot": {
+    "format": "<span color='#7FB4CA' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>\udb83\ude51</span>",
+    "on-click": "sh -c 'grim -g \"$(slurp)\" - | wl-copy'",
+    "tooltip": false
+  },
+  "custom/clipboard": {
+    "format": "<span color='#E6C384' font_family='JetBrainsMono Nerd Font'>\udb80\udd4d</span>",
+    "tooltip": false,
+    "on-click": "$HOME/.config/eww/scripts/clipboard.sh toggle"
+  },
+  "tray": {
+    "spacing": 10,
+    "icon-size": 16
+  },
+  "group/controls": {
+    "orientation": "horizontal",
+    "modules": [
+      "pulseaudio",
+      "network",
+      "battery",
+      "custom/power"
+    ]
+  },
+  "pulseaudio": {
+    "format": "<span color='#7E9CD8' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>{icon} </span>{volume}%",
+    "format-icons": {
+      "headphone": "\uf025",
+      "hands-free": "\uf025",
+      "headset": "\uf025",
+      "phone": "\uf095",
+      "portable": "\uf10b",
+      "car": "\uf1b9",
+      "default": [
+        "\uf026",
+        "\uf027",
+        "\uf028"
+      ]
+    },
+    "on-click": "$HOME/.config/eww/scripts/toggle.sh",
+    "on-click-right": "pavucontrol",
+    "format-muted": "<span color='#727169' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>\udb81\udf5f </span>{volume}%",
+    "tooltip": false
+  },
+  "network": {
+    "format-wifi": "<span color='#7FB4CA' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>\uf1eb </span>{signalStrength}%",
+    "format-ethernet": "<span color='#7FB4CA' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>\udb80\ude00 </span>{ipaddr}/{cidr}",
+    "format-linked": "<span color='#7FB4CA' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>\udb80\ude00 </span>{ifname} (No IP)",
+    "format-disconnected": "<span color='#E82424' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>\u26a0 </span>Disconnected",
+    "on-click": "$HOME/.config/eww/scripts/toggle.sh",
+    "on-click-right": "kitty --class nmtui -e $HOME/go/bin/wifitui",
+    "tooltip": false
+  },
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "<span color='#7AA89F' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>{icon} </span>{capacity}%",
+    "format-full": "<span color='#7AA89F' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>{icon} </span>{capacity}%",
+    "format-warning": "<span color='#E6C384' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>{icon} </span>{capacity}%",
+    "format-critical": "<span color='#E82424' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>{icon} </span>{capacity}%",
+    "format-charging": "<span color='#98BB6C' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>\uf0e7 </span>{capacity}%",
+    "format-plugged": "<span color='#98BB6C' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>\uf1e6 </span>{capacity}%",
+    "format-icons": [
+      "\uf244",
+      "\uf243",
+      "\uf242",
+      "\uf241",
+      "\uf240"
     ],
-    "modules-right": [
-        "tray",
-        "pulseaudio",
-        "network",
-        "battery",
-        "custom/notification",
-        "custom/power"
-    ],
-    "custom/logo": {
-        "format": "<span color='#7E9CD8'>\uf30a</span>",
-        "tooltip": false,
-        "on-click": "rofi -show drun"
-    },
-    "custom/sysinfo": {
-        "exec": "$HOME/.config/waybar/scripts/sysinfo.sh",
-        "return-type": "json",
-        "restart-interval": 5
-    },
-    "mpris": {
-        "format": "<span color='#957FB8'>\udb81\udf5a</span> {dynamic}",
-        "format-paused": "<span color='#727169'>\uf04c</span> <i>{dynamic}</i>",
-        "dynamic-len": 28,
-        "dynamic-order": [
-            "title",
-            "artist"
-        ],
-        "on-click": "playerctl play-pause",
-        "on-scroll-up": "playerctl next",
-        "on-scroll-down": "playerctl previous",
-        "tooltip": false
-    },
-    "hyprland/workspaces": {
-        "format": "{name}",
-        "persistent-workspaces": {
-            "*": 10
-        },
-        "on-click": "activate",
-        "on-scroll-up": "hyprctl dispatch workspace e+1",
-        "on-scroll-down": "hyprctl dispatch workspace e-1"
-    },
-    "custom/screenshot": {
-        "format": "<span color='#7FB4CA'>\udb83\ude51</span>",
-        "on-click": "sh -c 'grim -g \"$(slurp)\" - | wl-copy'",
-        "tooltip": false
-    },
-    "tray": {
-        "spacing": 10,
-        "icon-size": 16
-    },
-    "pulseaudio": {
-        "format": "<span color='#7E9CD8'>{icon}</span> {volume}%",
-        "format-icons": {
-            "headphone": "\uf025",
-            "hands-free": "\uf025",
-            "headset": "\uf025",
-            "phone": "\uf095",
-            "portable": "\uf10b",
-            "car": "\uf1b9",
-            "default": [
-                "\uf026",
-                "\uf027",
-                "\uf028"
-            ]
-        },
-        "on-click": "pavucontrol",
-        "format-muted": "<span color='#727169'>\udb81\udf5f</span> {volume}%",
-        "tooltip": false
-    },
-    "network": {
-        "format-wifi": "<span color='#7FB4CA'>\uf1eb</span> {signalStrength}%",
-        "format-ethernet": "<span color='#7FB4CA'>\udb80\ude00</span> {ipaddr}/{cidr}",
-        "format-linked": "<span color='#7FB4CA'>\udb80\ude00</span> {ifname} (No IP)",
-        "format-disconnected": "<span color='#E82424'>\u26a0</span> Disconnected",
-        "on-click": "kitty --class nmtui -e $HOME/go/bin/wifitui",
-        "on-click-right": "nm-connection-editor",
-        "tooltip": false
-    },
-    "battery": {
-        "states": {
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "<span color='#7AA89F'>{icon}</span> {capacity}%",
-        "format-full": "<span color='#7AA89F'>{icon}</span> {capacity}%",
-        "format-warning": "<span color='#E6C384'>{icon}</span> {capacity}%",
-        "format-critical": "<span color='#E82424'>{icon}</span> {capacity}%",
-        "format-charging": "<span color='#98BB6C'>\uf0e7</span> {capacity}%",
-        "format-plugged": "<span color='#98BB6C'>\uf1e6</span> {capacity}%",
-        "format-icons": [
-            "\uf244",
-            "\uf243",
-            "\uf242",
-            "\uf241",
-            "\uf240"
-        ],
-        "on-click": "$HOME/.config/waybar/menus/profiles.sh",
-        "tooltip": false
-    },
-    "clock": {
-        "format": "{:%H:%M}",
-        "format-alt": "{:%a %d %b  %H:%M}",
-        "tooltip": false
-    },
-    "custom/notification": {
-        "format": "{icon}",
-        "format-icons": {
-            "notification": "<span color='#ffffff'>\udb84\udd6b</span>",
-            "none": "<span color='#ffffff'>\udb80\udc9a</span>",
-            "dnd-notification": "<span color='#727169'>\udb80\udc9b</span>",
-            "dnd-none": "<span color='#727169'>\udb80\udc9b</span>",
-            "inhibited-notification": "<span color='#ffffff'>\udb84\udd6b</span>",
-            "inhibited-none": "<span color='#ffffff'>\udb80\udc9a</span>",
-            "dnd-inhibited-notification": "<span color='#727169'>\udb80\udc9b</span>",
-            "dnd-inhibited-none": "<span color='#727169'>\udb80\udc9b</span>"
-        },
-        "return-type": "json",
-        "exec-if": "which swaync-client",
-        "exec": "swaync-client -swb",
-        "on-click": "swaync-client -t -sw",
-        "on-click-right": "swaync-client -d -sw",
-        "escape": true,
-        "tooltip": false
-    },
-    "custom/power": {
-        "format": "<span color='#E46876'>\u23fb</span>",
-        "tooltip": false,
-        "on-click": "$HOME/.config/waybar/menus/power.sh"
-    }
+    "on-click": "$HOME/.config/eww/scripts/toggle.sh",
+    "on-click-right": "$HOME/.config/waybar/menus/profiles.sh",
+    "tooltip": false
+  },
+  "custom/power": {
+    "format": "<span color='#E46876' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>\u23fb</span>",
+    "tooltip": false,
+    "on-click": "$HOME/.config/eww/scripts/toggle.sh",
+    "on-click-right": "$HOME/.config/waybar/menus/power.sh"
+  }
 }

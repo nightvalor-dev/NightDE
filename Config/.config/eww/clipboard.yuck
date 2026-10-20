@@ -1,0 +1,41 @@
+;; NightDE clipboard history — opened from Waybar's clipboard button
+;; Pages of 15. Click an entry to paste it; click anywhere outside to close.
+
+(defvar clip '{"items": [], "page": 1, "pages": 1, "total": 0, "has_prev": false, "has_next": false}')
+
+;; Invisible full-screen layer behind the dropdown: click outside closes it
+(defwindow clip-closer
+  :monitor 0
+  :geometry (geometry :x "0px" :y "0px" :width "100%" :height "100%" :anchor "top left")
+  :stacking "overlay"
+  :exclusive false
+  :focusable false
+  :namespace "eww-clip-closer"
+  (eventbox :class "closer" :onclick "$HOME/.config/eww/scripts/clipboard.sh close"
+    (box :hexpand true :vexpand true)))
+
+(defwindow clipboard
+  :monitor 0
+  :geometry (geometry :x "6px" :y "6px" :width "400px" :anchor "top right")
+  :stacking "overlay"
+  :exclusive false
+  :focusable false
+  :namespace "eww-clipboard"
+  (clipboard))
+
+(defwidget clipboard []
+  (box :class "clip" :orientation "v" :space-evenly false :spacing 10
+    (box :class "clip-header" :space-evenly false
+      (label :class "clip-title" :halign "start" :hexpand true :text "󰅍  Clipboard")
+      (label :class "clip-count" :text "${clip.total} items")
+      (button :class "clear" :onclick "$HOME/.config/eww/scripts/clipboard.sh wipe" "Clear all"))
+    (label :class "empty" :visible {clip.total == 0} :text "Nothing copied yet")
+    (box :class "clip-list" :orientation "v" :space-evenly false :spacing 4
+      (for item in {clip.items}
+        (button :class "clip-item" :onclick "$HOME/.config/eww/scripts/clipboard.sh paste ${item.id} &"
+          (label :halign "start" :xalign 0 :limit-width 46 :show-truncated true
+                 :text {item.image ? "󰥶  Image" : item.text}))))
+    (box :class "clip-footer" :space-evenly false :visible {clip.pages > 1}
+      (button :class "clip-arrow" :active {clip.has_prev} :onclick "$HOME/.config/eww/scripts/clipboard.sh prev" "󰅁")
+      (label :class "clip-page" :hexpand true :text "${clip.page} / ${clip.pages}")
+      (button :class "clip-arrow" :active {clip.has_next} :onclick "$HOME/.config/eww/scripts/clipboard.sh next" "󰅂"))))

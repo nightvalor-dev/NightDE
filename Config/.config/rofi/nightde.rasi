@@ -1,0 +1,100 @@
+/* NightDE rofi theme — Kanagawa, frosted (blur comes from a Hyprland layer rule) */
+
+* {
+    bg:           #12121299;   /* 60% — was E0 (88%) */
+    bg-alt:       #FFFFFF0F;   /* search bar: faint white glass instead of solid grey */
+    selected:     #FFFFFF1A;   /* highlighted row: brighter glass */
+    fg:           #DCD7BA;     /* fujiWhite */
+    muted:        #727169;     /* fujiGray */
+    accent:       #E46876;     /* waveRed */
+    border-color: #957FB8B3;   /* oniViolet border, like the screenshot */
+
+    background-color: transparent;
+    text-color:       @fg;
+    font:             "Rubik 15";
+}
+
+window {
+    location:         center;
+    anchor:           center;
+    width:            610px;
+    background-color: @bg;
+    border:           2px solid;
+    border-color:     #C34043EE;
+    border-radius:    0px;
+    padding:          18px;
+}
+
+mainbox {
+    background-color: transparent;
+    spacing:          12px;
+    children:         [ inputbar, listview ];
+}
+
+/* ---- Search bar ---- */
+inputbar {
+    background-color: @bg-alt;
+    border-radius:    6px;
+    padding:          8px 10px;
+    spacing:          8px;
+    children:         [ textbox-search, entry ];
+}
+
+textbox-search {
+    expand:         false;
+    str:            "";
+    font:           "JetBrainsMono Nerd Font 13";
+    text-color:     @muted;
+    vertical-align: 0.5;
+}
+
+entry {
+    placeholder:       "Choose your app…";
+    placeholder-color: @muted;
+    cursor:            text;
+    vertical-align:    0.5;
+}
+
+/* ---- App list ---- */
+listview {
+    lines:        12;
+    columns:      1;
+    fixed-height: true;
+    scrollbar:    false;
+    spacing:      0px;
+    cycle:        true;
+}
+
+element {
+    padding:       10px 8px 10px 18px;
+    spacing:       12px;
+    border-radius: 4px;
+    cursor:        pointer;
+}
+
+element normal.normal,
+element alternate.normal,
+element normal.active,
+element alternate.active {
+    background-color: transparent;
+    text-color:       @fg;
+}
+
+element selected.normal,
+element selected.active {
+    background-color: @selected;
+    text-color:       @fg;
+}
+
+element-icon {
+    size:           28px;
+    vertical-align: 0.5;
+    cursor:         inherit;
+}
+
+element-text {
+    vertical-align: 0.5;
+    text-color:     inherit;
+    highlight:      bold #E46876;   /* matched letters while you type */
+    cursor:         inherit;
+}

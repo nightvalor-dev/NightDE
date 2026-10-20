@@ -1,0 +1,17 @@
+.config/hypr
+.config/waybar
+.config/eww
+.config/dunst
+.config/kitty
+.config/rofi
+.config/nvim
+.config/qt6ct
+.config/gtk-3.0
+.config/gtk-4.0
+.config/fontconfig
+.config/systemd/user/hyprland-session.target
+.config/starship.toml
+.config/Code/User/settings.json
+.local/share/nwg-look
+.local/bin/eww
+.dircolors

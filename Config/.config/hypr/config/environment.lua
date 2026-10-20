@@ -4,9 +4,6 @@
 
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
 
-hl.env("XCURSOR_SIZE", "24")
-hl.env("HYPRCURSOR_SIZE", "24")
-
 -- Electron apps (VS Code, Postman) use Wayland instead of XWayland: sharper text with scaling
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 
@@ -16,6 +13,12 @@ hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 
 -- Firefox-based apps on Wayland
 hl.env("MOZ_ENABLE_WAYLAND", "1")
+
+-- Cursor theme and size
+hl.env("XCURSOR_THEME", "Bibata-Modern-Ice")
+hl.env("XCURSOR_SIZE", "24")
+hl.env("HYPRCURSOR_THEME", "Bibata-Modern-Ice")
+hl.env("HYPRCURSOR_SIZE", "24")
 
 -----------------------
 ----- PERMISSIONS -----

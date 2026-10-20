@@ -8515,3 +8515,6 @@ read if you used those and something break with a version upgrade you're on your
 @define-color popover_fg_color #f2ecbc;
 @define-color shade_color rgba(242, 236, 188, 0.12);
 @define-color scrollbar_outline_color rgba(242, 236, 188, 0.12);
+
+/* NightDE: dull red text selection */
+selection, text selection, entry selection, textview text selection { background-color: #7A3B3F; color: #DCD7BA; }

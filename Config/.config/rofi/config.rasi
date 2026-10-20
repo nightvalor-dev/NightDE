@@ -1,0 +1,16 @@
+/* NightDE rofi — app launcher (Super+A) */
+configuration {
+    modi:                "drun,run,window";
+    show-icons:          true;
+    icon-theme:          "WhiteSur-dark";
+    display-drun:        "Apps";
+    display-run:         "Run";
+    display-window:      "Windows";
+    drun-display-format: "{name}";
+    font:                "Rubik 13";
+    hover-select:        true;
+    me-select-entry:     "";
+    me-accept-entry:     "MousePrimary";
+}
+
+@theme "~/.config/rofi/nightde.rasi"

@@ -10,7 +10,8 @@ ring() {  # percent -> glyph
     local p=$1; (( p < 0 )) && p=0; (( p > 100 )) && p=100
     echo "${RINGS[$(( (p * 8 + 50) / 100 ))]}"
 }
-span() { printf "<span color='%s'>%s</span>" "$1" "$2"; }
+# Icon + the space after it are drawn in the Nerd Font so they never overlap the number
+span() { printf "<span color='%s' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>%s </span>" "$1" "$2"; }
 
 gib() { awk -v k="$1" 'BEGIN { printf "%.1f GiB", k / 1048576 }'; }
 
@@ -65,9 +66,9 @@ while true; do
     temp=$(read_temp); temp=${temp:-0}
     tcol='#FFA066'; (( temp >= 80 )) && tcol='#E82424'
 
-    text="$(span '#98BB6C' "$(ring "$usage")") ${usage}%   "
-    text+="$(span '#7E9CD8' "$(ring "$mem_pct")") ${mem_pct}%   "
-    text+="$(span "$tcol" "$(ring "$temp")") ${temp}°C"
+    text="$(span '#98BB6C' "$(ring "$usage")")${usage}%   "
+    text+="$(span '#7E9CD8' "$(ring "$mem_pct")")${mem_pct}%   "
+    text+="$(span "$tcol" "$(ring "$temp")")${temp}°C"
 
     t="<b>CPU</b>\n"
     t+=$(printf '%-12s %s' "Model" "$cpu_model")"\n"

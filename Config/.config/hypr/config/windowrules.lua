@@ -7,39 +7,38 @@
 
 -- Example window rules that are useful
 local suppressMaximizeRule = hl.window_rule({
-    -- Ignore maximize requests from all apps. You'll probably like this.
-    name  = "suppress-maximize-events",
-    match = { class = ".*" },
+	-- Ignore maximize requests from all apps. You'll probably like this.
+	name = "suppress-maximize-events",
+	match = { class = ".*" },
 
-    suppress_event = "maximize",        -- suppressMaximizeRule:set_enabled(false)
+	suppress_event = "maximize", -- suppressMaximizeRule:set_enabled(false)
 })
 
 hl.window_rule({
-    -- Fix some dragging issues with XWayland
-    name  = "fix-xwayland-drags",
-    match = {
-        class      = "^$",
-        title      = "^$",
-        xwayland   = true,
-        float      = true,
-        fullscreen = false,
-        pin        = false,
-    },
+	-- Fix some dragging issues with XWayland
+	name = "fix-xwayland-drags",
+	match = {
+		class = "^$",
+		title = "^$",
+		xwayland = true,
+		float = true,
+		fullscreen = false,
+		pin = false,
+	},
 
-    no_focus = true,
+	no_focus = true,
 })
 
 hl.layer_rule({
-    name  = "blur-wlogout",
-    match = { namespace = "logout_dialog" },
-    blur  = true,
+	name = "blur-wlogout",
+	match = { namespace = "logout_dialog" },
+	blur = true,
 })
 
 hl.window_rule({
-    name  = "float-utilities",
-    match = { class = "^(org.pulseaudio.pavucontrol|nm-connection-editor|blueman-manager)$" },
-
-    float = true,
+	name = "float-utilities",
+	match = { class = "^(org.pulseaudio.pavucontrol|nm-connection-editor|blueman-manager)$" },
+	float = true,
 })
 
 -- Layer rules also return a handle.
@@ -52,30 +51,49 @@ hl.window_rule({
 
 -- Hyprland-run windowrule
 hl.window_rule({
-    name  = "move-hyprland-run",
-    match = { class = "hyprland-run" },
+	name = "move-hyprland-run",
+	match = { class = "hyprland-run" },
 
-    move  = "20 monitor_h-120",
-    float = true,
+	move = "20 monitor_h-120",
+	float = true,
 })
 
 -- Settings-type apps open floating, centered, at a sensible size
 hl.window_rule({
-    name   = "float-settings-apps",
-    match  = { class = "^(org.pulseaudio.pavucontrol|pavucontrol|nwg-look|qt6ct|code|brave|nmtui)$" },
-    float  = true,
-    center = true,
-    size   = "900 600",
+	name = "float-settings-apps",
+	match = {
+		class = "^(org.pulseaudio.pavucontrol|pavucontrol|nwg-look|qt6ct|org.qt-project.qt6ct|nm-connection-editor|code|brave|nmtui|xdg-desktop-portal-gtk|bluetui)$",
+	},
+	float = true,
+	center = true,
+	size = "900 600",
 })
 
 -- Nautilus: full when alone, floating when the workspace already has a window
 hl.window_rule({
-    name   = "nautilus-float-when-busy",
-    match  = { class = "^(org.gnome.Nautilus)$", workspace = "w[1-99]" },
-    float  = true,
-    center = true,
-    size   = "1100 700",
+	name = "nautilus-float-when-busy",
+	match = { class = "^(org.gnome.Nautilus)$", workspace = "w[1-99]" },
+	float = true,
+	center = true,
+	size = "1100 700",
 })
 
-hl.layer_rule({ name = "blur-waybar", match = { namespace = "^waybar$" }, blur = true })
-hl.layer_rule({ name = "blur-swaync", match = { namespace = "^swaync-" }, blur = true, ignore_alpha = 0.1 })
+-- Kitty: always opens floating, in the top-right corner
+hl.window_rule({
+	name = "kitty-float",
+	match = { class = "^(kitty)$" },
+	float = true,
+	size = "1100 600",
+	move = "80 100",
+})
+
+hl.layer_rule({ name = "blur-rofi", match = { namespace = "^rofi$" }, blur = true, ignore_alpha = 0.1 })
+hl.layer_rule({ name = "blur-eww", match = { namespace = "^eww-sidebar$" }, blur = true, ignore_alpha = 0.1 })
+hl.layer_rule({ name = "blur-dunst", match = { namespace = "^notifications$" }, blur = true, ignore_alpha = 0.1 })
+hl.layer_rule({ name = "blur-waybar", match = { namespace = "^waybar$" }, blur = true, ignore_alpha = 0.1 })
+hl.layer_rule({
+	name = "blur-eww-clipboard",
+	match = { namespace = "^eww-clipboard$" },
+	blur = true,
+	ignore_alpha = 0.1,
+})

@@ -1,0 +1,30 @@
+// NightDE clipboard dropdown — same frosted Kanagawa look as the sidebar
+// (uses the $bg / $text / $muted / $surface / $hover variables from eww.scss)
+
+.clip {
+  background-color: $bg;
+  border-radius: 20px;
+  padding: 14px;
+}
+
+.clip-title { font-size: 15px; font-weight: bold; }
+.clip-count { font-size: 12px; color: $muted; margin-right: 10px; }
+
+.clip-item {
+  background-color: $surface;
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+.clip-item:hover { background-color: $hover; }
+.clip-item label { font-size: 13px; color: $text; }
+
+.clip-footer { margin-top: 2px; }
+.clip-page { font-size: 12px; color: $muted; }
+.clip-arrow {
+  font-size: 18px;
+  color: $text;
+  padding: 2px 10px;
+  border-radius: 999px;
+}
+.clip-arrow:hover    { background-color: $hover; }
+.clip-arrow:disabled { color: #3A3A3A; }
