@@ -1,0 +1,28 @@
+{
+  "display": "Everforest",
+  "order": 3,
+  "nvim": "everforest",
+  "vscode": "Everforest Dark",
+  "roles": {
+    "bg": "#2D353B",
+    "bg_dim": "#232A2E",
+    "bg_alt": "#343F44",
+    "surface": "#3D484D",
+    "overlay": "#475258",
+    "dim": "#56635F",
+    "muted": "#859289",
+    "fg": "#D3C6AA",
+    "fg_soft": "#9DA9A0",
+    "accent": "#A7C080",
+    "accent2": "#7A9A6C",
+    "selection": "#425047",
+    "red": "#E67E80",
+    "orange": "#E69875",
+    "yellow": "#DBBC7F",
+    "green": "#9DB46F",
+    "teal": "#83C092",
+    "cyan": "#8EC3BA",
+    "blue": "#7FBBB3",
+    "magenta": "#D699B6"
+  }
+}

@@ -1,0 +1,24 @@
+;; NightDE theme picker — a row of colour dots in the sidebar.
+;; Click a dot to switch the whole desktop's colours; the active theme has a ring.
+
+(defpoll theme :interval "5s" :initial "kanagawa"
+  "cat $HOME/.config/nightde/current 2>/dev/null || echo kanagawa")
+
+(defwidget theme-picker []
+  (box :class "themes" :orientation "h" :space-evenly false :halign "center" :spacing 16
+    (button :class {theme == "kanagawa" ? "tdot kanagawa active" : "tdot kanagawa"}
+            :tooltip "Kanagawa"
+            :onclick "$HOME/.config/nightde/theme.sh kanagawa &"
+      "")
+    (button :class {theme == "catppuccin-mocha" ? "tdot catppuccin-mocha active" : "tdot catppuccin-mocha"}
+            :tooltip "Catppuccin Mocha"
+            :onclick "$HOME/.config/nightde/theme.sh catppuccin-mocha &"
+      "")
+    (button :class {theme == "everforest" ? "tdot everforest active" : "tdot everforest"}
+            :tooltip "Everforest"
+            :onclick "$HOME/.config/nightde/theme.sh everforest &"
+      "")
+    (button :class {theme == "ember" ? "tdot ember active" : "tdot ember"}
+            :tooltip "Ember"
+            :onclick "$HOME/.config/nightde/theme.sh ember &"
+      "")))

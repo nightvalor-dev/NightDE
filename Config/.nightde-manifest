@@ -10,6 +10,7 @@
 .config/gtk-4.0
 .config/fontconfig
 .config/systemd/user/hyprland-session.target
+.config/nightde
 .config/starship.toml
 .config/Code/User/settings.json
 .local/share/nwg-look

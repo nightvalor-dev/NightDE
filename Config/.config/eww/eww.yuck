@@ -37,6 +37,7 @@
   (box :class "sidebar" :orientation "v" :space-evenly false :spacing 16
     (header)
     (quick-buttons)
+    (theme-picker)
     (sliders)
     (notification-box)
     (month-calendar)))
@@ -122,3 +123,5 @@
                    :xalign 0.5 :yalign 0.5 :text {day.d})))))))
 
 (include "./clipboard.yuck")
+
+(include "./themes.yuck")

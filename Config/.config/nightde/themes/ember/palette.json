@@ -1,0 +1,28 @@
+{
+  "display": "Ember",
+  "order": 4,
+  "nvim": "catppuccin-macchiato",
+  "vscode": null,
+  "roles": {
+    "bg": "#220F0E",
+    "bg_dim": "#180A09",
+    "bg_alt": "#2C1716",
+    "surface": "#392220",
+    "overlay": "#5A3B38",
+    "dim": "#4D3533",
+    "muted": "#A08C8A",
+    "fg": "#F1DEDC",
+    "fg_soft": "#D8C2BF",
+    "accent": "#FFB4AB",
+    "accent2": "#C0544B",
+    "selection": "#73332E",
+    "red": "#FF5449",
+    "orange": "#FFB68E",
+    "yellow": "#E7C27D",
+    "green": "#B5CC8E",
+    "teal": "#8CC7B5",
+    "cyan": "#9ECFD6",
+    "blue": "#A7B8E8",
+    "magenta": "#F0A8C0"
+  }
+}

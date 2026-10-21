@@ -33,6 +33,7 @@ CONFIGS=(
     .config/gtk-4.0         # GTK4 / libadwaita theme
     .config/fontconfig      # Rubik as the system font
     .config/systemd/user/hyprland-session.target   # lets the desktop portal start under Hyprland
+    .config/nightde         # theme switcher: engine, themes, per-theme wallpapers
     .config/starship.toml   # shell prompt
     .config/Code/User/settings.json      # VS Code settings
     .config/Code/User/keybindings.json   # VS Code keybindings
@@ -82,6 +83,17 @@ for item in "${OBSOLETE[@]}"; do
         echo "  remove  $item (no longer used)"
     fi
 done
+
+# Save the project in Kanagawa whatever theme is active right now, so switching
+# themes never shows up as changed files in git.
+if [ -f "$DEST/.config/nightde/nightde-theme.py" ]; then
+    HOME="$DEST" python3 "$DEST/.config/nightde/nightde-theme.py" apply kanagawa >/dev/null &&
+        echo "  theme   saved as Kanagawa"
+    # the engine wrote paths under the project; point them back at the home folder
+    grep -rIl -- "$DEST/" "$DEST" 2>/dev/null | while IFS= read -r f; do
+        sed -i "s|$DEST/|$HOME/|g" "$f"
+    done
+fi
 
 # Leftover backups and generated junk don't belong in the project
 find "$DEST" \( -name '*.bak*' -o -name '*.nightde-tmp' -o -name '__pycache__' \) -prune -exec rm -rf {} + 2>/dev/null || true

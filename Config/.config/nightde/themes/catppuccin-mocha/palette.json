@@ -1,0 +1,28 @@
+{
+  "display": "Catppuccin Mocha",
+  "order": 2,
+  "nvim": "catppuccin-mocha",
+  "vscode": "Catppuccin Mocha",
+  "roles": {
+    "bg": "#1E1E2E",
+    "bg_dim": "#181825",
+    "bg_alt": "#313244",
+    "surface": "#45475A",
+    "overlay": "#6C7086",
+    "dim": "#585B70",
+    "muted": "#7F849C",
+    "fg": "#CDD6F4",
+    "fg_soft": "#BAC2DE",
+    "accent": "#CBA6F7",
+    "accent2": "#B4BEFE",
+    "selection": "#4B4466",
+    "red": "#F38BA8",
+    "orange": "#FAB387",
+    "yellow": "#F9E2AF",
+    "green": "#A6E3A1",
+    "teal": "#94E2D5",
+    "cyan": "#89DCEB",
+    "blue": "#89B4FA",
+    "magenta": "#F5C2E7"
+  }
+}

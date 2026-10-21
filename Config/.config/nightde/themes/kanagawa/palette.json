@@ -1,0 +1,28 @@
+{
+  "display": "Kanagawa",
+  "order": 1,
+  "nvim": "kanagawa",
+  "vscode": "Kanagawa Black",
+  "roles": {
+    "bg": "#121212",
+    "bg_dim": "#0D0D0D",
+    "bg_alt": "#1A1A1A",
+    "surface": "#393836",
+    "overlay": "#54546D",
+    "dim": "#4A4A4A",
+    "muted": "#727169",
+    "fg": "#DCD7BA",
+    "fg_soft": "#C8C093",
+    "accent": "#E46876",
+    "accent2": "#C34043",
+    "selection": "#7A3B3F",
+    "red": "#E82424",
+    "orange": "#FFA066",
+    "yellow": "#E6C384",
+    "green": "#98BB6C",
+    "teal": "#7AA89F",
+    "cyan": "#7FB4CA",
+    "blue": "#7E9CD8",
+    "magenta": "#957FB8"
+  }
+}
