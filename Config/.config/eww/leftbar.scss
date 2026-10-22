@@ -1,0 +1,75 @@
+// nightde: no-recolor
+// NightDE left sidebar. Colours come from the $variables in eww.scss (which follow
+// the active theme); the theme preview dots keep their own fixed colours,
+// so the theme switcher skips this file.
+
+.leftbar {
+  background-color: $bg;
+  border-radius: 24px;
+  padding: 16px;
+}
+
+.lb-title   { margin-bottom: 2px; }
+.lb-logo    { font-size: 15px; }
+.lb-name    { font-size: 13px; font-weight: bold; }
+.lb-heading { font-size: 12px; font-weight: bold; color: $soft; margin: 0 0 2px 4px; }
+.lb-empty   { font-size: 11px; color: $muted; margin-left: 4px; }
+
+// ---- Theme rows ----
+.trow {
+  padding: 6px 8px;
+  border-radius: 12px;
+}
+.trow:hover  { background-color: $hover; }
+.trow.active { background-color: $surface; }
+.tname { font-size: 12px; }
+
+// Preview: half background, half accent of each theme
+.tdot {
+  min-width: 14px;
+  min-height: 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+.tdot.kanagawa         { background-image: linear-gradient(135deg, #121212 50%, #E46876 50%); }
+.tdot.catppuccin-mocha { background-image: linear-gradient(135deg, #1E1E2E 50%, #CBA6F7 50%); }
+.tdot.everforest       { background-image: linear-gradient(135deg, #2D353B 50%, #A7C080 50%); }
+.tdot.ember            { background-image: linear-gradient(135deg, #220F0E 50%, #FFB4AB 50%); }
+
+// ---- Pill toggle (smaller) ----
+.switch {
+  min-width: 40px;
+  min-height: 22px;
+  padding: 0 3px;
+  border-radius: 999px;
+  border: 2px solid $muted;
+  background-color: transparent;
+}
+.switch .knob {
+  min-width: 10px;
+  min-height: 10px;
+  margin: 0 2px;
+  border-radius: 999px;
+  background-color: $muted;
+}
+.switch.on {
+  border-color: $accent;
+  background-color: $accent;
+}
+.switch.on .knob {
+  min-width: 16px;
+  min-height: 16px;
+  margin: 0;
+  background-color: $red;
+}
+.knob-icon { font-size: 10px; color: $text; }
+
+// ---- Wallpaper thumbnails ----
+.wall-scroll { min-height: 250px; }
+.wall {
+  padding: 2px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+}
+.wall:hover  { border-color: $hover; }
+.wall.active { border-color: $accent; }

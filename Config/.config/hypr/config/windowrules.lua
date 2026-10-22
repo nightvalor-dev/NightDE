@@ -87,6 +87,7 @@ hl.window_rule({
 	move = "80 100",
 })
 
+hl.layer_rule({ name = "blur-eww-leftbar", match = { namespace = "^eww-leftbar$" }, blur = true, ignore_alpha = 0.1 })
 hl.layer_rule({ name = "blur-rofi", match = { namespace = "^rofi$" }, blur = true, ignore_alpha = 0.1 })
 hl.layer_rule({ name = "blur-eww", match = { namespace = "^eww-sidebar$" }, blur = true, ignore_alpha = 0.1 })
 hl.layer_rule({ name = "blur-dunst", match = { namespace = "^notifications$" }, blur = true, ignore_alpha = 0.1 })

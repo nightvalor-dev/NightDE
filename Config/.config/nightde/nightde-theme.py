@@ -36,13 +36,10 @@ RECOLOR_GLOBS = [
     ".config/hypr/*.lua",
     ".config/hypr/**/*.lua",
     ".config/hypr/**/*.conf",
-    ".config/gtk-3.0/gtk.css",
-    ".config/gtk-4.0/gtk.css",
-    ".dircolors",
 ]
 
-GTK_BEGIN = "/* >>> NightDE theme colours (generated — edited on every theme switch) >>> */"
-GTK_END = "/* <<< NightDE theme colours <<< */"
+GTK_BEGIN_OLD = "/* >>> NightDE theme colours (generated — edited on every theme switch) >>> */"
+GTK_END_OLD = "/* <<< NightDE theme colours <<< */"
 
 
 # ---------------------------------------------------------------- helpers
@@ -105,11 +102,24 @@ def make_recolor(old, new):
         hex_map[o.lstrip("#").upper()] = n.lstrip("#").upper()
         rgb_map[hexrgb(o)] = hexrgb(n)
 
+    style = {"lower": False}     # set per file in recolor()
+
+    def keep_case(orig, new, context=""):
+        """Write the new colour in the same letter case as the one it replaces.
+        All-digit colours (e.g. 121212) carry no case, so use the alpha/prefix,
+        then the file's usual style."""
+        letters = [c for c in orig + context if c.isalpha() and c.lower() in "abcdef"]
+        if letters:
+            lower = all(c.islower() for c in letters)
+        else:
+            lower = style["lower"]
+        return new.lower() if lower else new.upper()
+
     def hex_sub(m):
         body = m.group(2).upper()
         if body not in hex_map:
             return m.group(0)
-        return m.group(1) + hex_map[body] + (m.group(3) or "")
+        return m.group(1) + keep_case(m.group(2), hex_map[body], m.group(3) or "") + (m.group(3) or "")
 
     def rgb_sub(m):  # rgba(18, 18, 18, 0.7)  — keeps spacing style and alpha
         r, g, b = int(m.group(2)), int(m.group(4)), int(m.group(6))
@@ -120,25 +130,20 @@ def make_recolor(old, new):
 
     def argb_sub(m):  # 0xee1a1a1a (Hyprland shadow colours)
         body = m.group(2).upper()
-        return m.group(1) + hex_map[body] if body in hex_map else m.group(0)
+        return m.group(1) + keep_case(m.group(2), hex_map[body], m.group(1)[2:]) if body in hex_map else m.group(0)
 
-    def ansi_sub(m):  # 38;2;R;G;B  (true-colour codes in .dircolors)
-        r, g, b = int(m.group(2)), int(m.group(3)), int(m.group(4))
-        if (r, g, b) not in rgb_map:
-            return m.group(0)
-        nr, ng, nb = rgb_map[(r, g, b)]
-        return f"{m.group(1)}{nr};{ng};{nb}"
-
-    ansi_re = re.compile(r"((?:38|48);2;)(\d{1,3});(\d{1,3});(\d{1,3})")
     hex_re = re.compile(r"(#|rgba?\()([0-9A-Fa-f]{6})([0-9A-Fa-f]{2})?(?![0-9A-Fa-f])")
     rgb_re = re.compile(r"(rgba?\(\s*)(\d{1,3})(\s*,\s*)(\d{1,3})(\s*,\s*)(\d{1,3})(?=\s*[,)])")
     argb_re = re.compile(r"(0x[0-9A-Fa-f]{2})([0-9A-Fa-f]{6})(?![0-9A-Fa-f])")
 
+    case_re = re.compile(r"(?:#|0x|rgba?\()([0-9A-Fa-f]{6,8})(?![0-9A-Fa-f])")
+
     def recolor(text):
+        found = "".join(c for c in "".join(case_re.findall(text)) if c.isalpha())
+        style["lower"] = sum(c.islower() for c in found) > sum(c.isupper() for c in found)
         text = hex_re.sub(hex_sub, text)
         text = rgb_re.sub(rgb_sub, text)
         text = argb_re.sub(argb_sub, text)
-        text = ansi_re.sub(ansi_sub, text)
         return text
 
     return recolor
@@ -182,53 +187,65 @@ def write_kitty(name):
         write_if_changed(os.path.join(kdir, target), f.read())
 
 
-def gtk_block(p):
+def _rgba(hexc, a):
+    r, g, b = hexrgb(hexc)
+    return f"rgba({r}, {g}, {b}, {a})"
+
+
+def gtk_css(p, gtk4):
+    """Complete colour sheet for adw-gtk3 (GTK3) and libadwaita (GTK4)."""
     r = p["roles"]
-    return "\n".join([
-        GTK_BEGIN,
-        f"@define-color accent_color {r['accent']};",
-        f"@define-color accent_bg_color {r['accent']};",
-        f"@define-color accent_fg_color {r['bg']};",
-        f"@define-color window_bg_color {r['bg']};",
-        f"@define-color window_fg_color {r['fg']};",
-        f"@define-color view_bg_color {r['bg']};",
-        f"@define-color view_fg_color {r['fg']};",
-        f"@define-color headerbar_bg_color {r['bg_dim']};",
-        f"@define-color headerbar_fg_color {r['fg']};",
-        f"@define-color sidebar_bg_color {r['bg_dim']};",
-        f"@define-color sidebar_fg_color {r['fg']};",
-        f"@define-color popover_bg_color {r['bg_alt']};",
-        f"@define-color popover_fg_color {r['fg']};",
-        f"@define-color dialog_bg_color {r['bg_alt']};",
-        f"@define-color dialog_fg_color {r['fg']};",
-        f"@define-color card_bg_color {r['bg_alt']};",
-        f"@define-color card_fg_color {r['fg']};",
-        f"@define-color theme_bg_color {r['bg']};",
-        f"@define-color theme_fg_color {r['fg']};",
-        f"@define-color theme_base_color {r['bg']};",
-        f"@define-color theme_text_color {r['fg']};",
-        f"@define-color theme_selected_bg_color {r['selection']};",
-        f"@define-color theme_selected_fg_color {r['fg']};",
-        f"selection, text selection, entry selection, textview text selection "
-        f"{{ background-color: {r['selection']}; color: {r['fg']}; }}",
-        GTK_END,
-    ])
+    named = {
+        "accent_color": r["accent"], "accent_bg_color": r["accent"], "accent_fg_color": r["bg"],
+        "destructive_color": r["red"], "destructive_bg_color": r["red"], "destructive_fg_color": r["bg"],
+        "success_color": r["green"], "success_bg_color": r["green"], "success_fg_color": r["bg"],
+        "warning_color": r["yellow"], "warning_bg_color": r["yellow"], "warning_fg_color": _rgba(r["bg"], 0.8),
+        "error_color": r["red"], "error_bg_color": r["red"], "error_fg_color": r["bg"],
+        "window_bg_color": r["bg"], "window_fg_color": r["fg"],
+        "view_bg_color": r["bg"], "view_fg_color": r["fg"],
+        "headerbar_bg_color": r["bg_dim"], "headerbar_fg_color": r["fg"],
+        "headerbar_border_color": r["fg"], "headerbar_backdrop_color": r["bg_dim"],
+        "headerbar_shade_color": _rgba("#000000", 0.36),
+        "sidebar_bg_color": r["bg_dim"], "sidebar_fg_color": r["fg"],
+        "sidebar_backdrop_color": r["bg_dim"], "sidebar_shade_color": _rgba("#000000", 0.25),
+        "sidebar_border_color": _rgba("#000000", 0.36),
+        "secondary_sidebar_bg_color": r["bg_dim"], "secondary_sidebar_fg_color": r["fg"],
+        "secondary_sidebar_backdrop_color": r["bg_dim"],
+        "card_bg_color": r["bg_alt"], "card_fg_color": r["fg"], "card_shade_color": _rgba("#000000", 0.36),
+        "dialog_bg_color": r["bg_alt"], "dialog_fg_color": r["fg"],
+        "popover_bg_color": r["bg_alt"], "popover_fg_color": r["fg"], "popover_shade_color": _rgba("#000000", 0.25),
+        "thumbnail_bg_color": r["bg_alt"], "thumbnail_fg_color": r["fg"],
+        "shade_color": _rgba("#000000", 0.25), "scrollbar_outline_color": _rgba("#000000", 0.5),
+        # GTK3 theme names (adw-gtk3 and older apps)
+        "theme_bg_color": r["bg"], "theme_fg_color": r["fg"],
+        "theme_base_color": r["bg"], "theme_text_color": r["fg"],
+        "theme_selected_bg_color": r["accent"], "theme_selected_fg_color": r["bg"],
+        "insensitive_fg_color": r["muted"], "borders": _rgba(r["fg"], 0.15),
+    }
+    out = [f"/* NightDE — {p['display']}. Generated by the theme switcher; rewritten on every switch. */", ""]
+    out += [f"@define-color {k} {v};" for k, v in named.items()]
+    if gtk4:   # libadwaita 1.6+ reads CSS variables
+        out += ["", ":root {"]
+        out += [f"  --{k.replace('_', '-')}: {v};" for k, v in named.items() if not k.startswith(("theme_", "insensitive", "borders"))]
+        out += [f"  --border-color: {_rgba(r['fg'], 0.15)};", "}"]
+    out += ["",
+            "/* Highlighted text: the theme's selection colour */",
+            "selection, text selection, entry selection, textview text selection {",
+            f"  background-color: {r['selection']};",
+            f"  color: {r['fg']};",
+            "}", ""]
+    return "\n".join(out)
 
 
 def write_gtk(p):
-    for v in ("gtk-3.0", "gtk-4.0"):
+    for v, gtk4 in (("gtk-3.0", False), ("gtk-4.0", True)):
         d = os.path.join(HOME, ".config", v)
         if not os.path.isdir(d):
             continue
         path = os.path.join(d, "gtk.css")
-        try:
-            with open(os.path.realpath(path), encoding="utf-8") as f:
-                text = f.read()
-        except OSError:
-            text = ""
-        text = re.sub(re.escape(GTK_BEGIN) + r".*?" + re.escape(GTK_END) + r"\n?", "", text, flags=re.S)
-        text = text.rstrip("\n") + ("\n\n" if text.strip() else "") + gtk_block(p) + "\n"
-        write_if_changed(path, text)
+        if os.path.islink(path):          # an old theme's symlink: replace it with our own file
+            os.unlink(path)
+        write_if_changed(path, gtk_css(p, gtk4))
 
 
 def write_qt(name, p):

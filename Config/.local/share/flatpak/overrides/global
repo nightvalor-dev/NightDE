@@ -1,0 +1,9 @@
+[Context]
+filesystems=xdg-config/gtk-3.0:ro;~/.local/share/icons:ro;/home/vaelvorn/.themes:ro;xdg-data/icons:ro;xdg-config/gtk-4.0:ro;
+unset-environment=ICON_THEME;
+
+[Environment]
+GTK_THEME=adw-gtk3-dark
+ICON_THEME=
+XCURSOR_SIZE=24
+XCURSOR_THEME=Bibata-Modern-Ice

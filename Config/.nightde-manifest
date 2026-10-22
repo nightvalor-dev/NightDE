@@ -11,6 +11,13 @@
 .config/fontconfig
 .config/systemd/user/hyprland-session.target
 .config/nightde
+.config/xsettingsd
+.config/nwg-look
+.config/kdeglobals
+.config/pavucontrol.ini
+.gtkrc-2.0
+.bashrc
+.local/share/flatpak/overrides
 .config/starship.toml
 .config/Code/User/settings.json
 .local/share/nwg-look

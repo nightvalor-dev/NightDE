@@ -43,7 +43,7 @@ case "$1" in
     toggle)
         if is_open; then close; exit 0; fi
         # Only one top-right panel at a time
-        "$EWW" close sidebar sidebar-closer >/dev/null 2>&1
+        "$EWW" close sidebar sidebar-closer leftbar left-closer >/dev/null 2>&1
         refresh 0
         "$EWW" open clip-closer >/dev/null 2>&1
         # Open directly under the mouse (i.e. under the Waybar icon you clicked)

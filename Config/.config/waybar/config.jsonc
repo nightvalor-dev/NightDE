@@ -22,7 +22,8 @@
   "custom/logo": {
     "format": "<span color='#7E9CD8' font_family='JetBrainsMono Nerd Font' letter_spacing='614'>\uf30a</span>",
     "tooltip": false,
-    "on-click": "rofi -show drun"
+      "on-click": "$HOME/.config/eww/scripts/leftbar.sh",
+      "on-click-right": "rofi -show drun"
   },
   "clock": {
     "format": "{:%H:%M}",

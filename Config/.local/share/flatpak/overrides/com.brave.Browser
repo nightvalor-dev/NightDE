@@ -1,0 +1,5 @@
+[Environment]
+GTK_THEME=
+
+[Context]
+unset-environment=GTK_THEME;

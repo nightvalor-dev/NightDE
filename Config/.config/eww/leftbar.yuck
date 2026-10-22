@@ -1,0 +1,69 @@
+;; NightDE left sidebar — opened from the Fedora logo in Waybar.
+;; Themes: one toggle per theme; switching one on turns the others off.
+;; Wallpapers: the current theme's wallpapers; click one to change only the wallpaper.
+;; Click outside or press Esc to close.
+
+(defpoll theme :interval "5s" :initial "kanagawa"
+  "cat $HOME/.config/nightde/current 2>/dev/null || echo kanagawa")
+;; Rows of two thumbnails for the current theme; refreshed when the panel opens
+(defpoll walls :interval "600s" :initial "[]" "$HOME/.config/eww/scripts/wallpapers.sh list")
+(defpoll wall_current :interval "600s" :initial "" "$HOME/.config/eww/scripts/wallpapers.sh current")
+
+;; Invisible full-screen layer behind the panel: click outside closes it
+(defwindow left-closer
+  :monitor 0
+  :geometry (geometry :x "0px" :y "0px" :width "100%" :height "100%" :anchor "top left")
+  :stacking "overlay"
+  :exclusive false
+  :focusable false
+  :namespace "eww-left-closer"
+  (eventbox :class "closer" :onclick "$HOME/.config/eww/scripts/panels.sh close"
+    (box :hexpand true :vexpand true)))
+
+(defwindow leftbar
+  :monitor 0
+  :geometry (geometry :x "6px" :y "6px" :width "320px" :anchor "top left")
+  :stacking "overlay"
+  :exclusive false
+  :focusable false
+  :namespace "eww-leftbar"
+  (leftbar))
+
+(defwidget leftbar []
+  (box :class "leftbar" :orientation "v" :space-evenly false :spacing 14
+    (box :class "lb-title" :space-evenly false :spacing 10
+      (label :class "lb-logo" :text "")
+      (label :class "lb-name" :text "NightDE"))
+    (box :class "lb-section" :orientation "v" :space-evenly false :spacing 4
+      (label :class "lb-heading" :halign "start" :text "Themes")
+        (theme-row :name "kanagawa" :label "Kanagawa")
+        (theme-row :name "catppuccin-mocha" :label "Catppuccin Mocha")
+        (theme-row :name "everforest" :label "Everforest")
+        (theme-row :name "ember" :label "Ember"))
+    (box :class "lb-section" :orientation "v" :space-evenly false :spacing 6
+      (label :class "lb-heading" :halign "start" :text "Wallpapers")
+      (label :class "lb-empty" :halign "start" :wrap true :xalign 0
+             :visible {arraylength(walls) == 0}
+             :text "Add images to ~/.config/nightde/themes/${theme}/wallpapers")
+      (scroll :class "wall-scroll" :vscroll true :hscroll false
+              :visible {arraylength(walls) > 0}
+        (box :orientation "v" :space-evenly false :spacing 8
+          (for row in walls
+            (box :orientation "h" :space-evenly false :spacing 8
+              (for w in row
+                (button :class {w.path == wall_current ? "wall active" : "wall"}
+                        :tooltip {w.name}
+                        :onclick "$HOME/.config/nightde/theme.sh wallpaper '${w.path}' &"
+                  (image :path {w.thumb} :image-width 128 :image-height 72))))))))))
+
+;; One theme: colour preview, name, and a pill toggle (on = active theme)
+(defwidget theme-row [name label]
+  (button :class {theme == name ? "trow active" : "trow"}
+          :onclick "$HOME/.config/nightde/theme.sh ${name} &"
+    (box :space-evenly false :spacing 10
+      (box :class "tdot ${name}" :valign "center")
+      (label :class "tname" :halign "start" :hexpand true :text label)
+      (box :class {theme == name ? "switch on" : "switch"} :valign "center" :space-evenly false
+        (box :class "knob" :hexpand true :valign "center"
+             :halign {theme == name ? "end" : "start"}
+          (label :class "knob-icon" :hexpand true :text {theme == name ? "󰄬" : ""}))))))

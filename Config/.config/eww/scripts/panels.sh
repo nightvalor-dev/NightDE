@@ -7,7 +7,7 @@ case "$1" in
     enter)
         hyprctl dispatch 'hl.dsp.submap("eww-panel")' >/dev/null 2>&1 ;;
     close)
-        "$EWW" close sidebar sidebar-closer clipboard clip-closer >/dev/null 2>&1
+        "$EWW" close sidebar sidebar-closer clipboard clip-closer leftbar left-closer >/dev/null 2>&1
         hyprctl dispatch 'hl.dsp.submap("reset")' >/dev/null 2>&1 ;;
     *)
         echo "usage: panels.sh enter|close"; exit 1 ;;
